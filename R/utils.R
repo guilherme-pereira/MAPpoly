@@ -611,13 +611,6 @@ add_marker <- function(input.map,
   if(!all(c(input.map$info$mrk.names, mrk)%in%colnames(rf.matrix$rec.mat))){
     stop(deparse(substitute(rf.matrix)), " does not contain all necessary information about 'input.map' and 'mrk'.")
   }
-  if(is.null(genoprob)){
-    message("Calculating genoprob.")
-    genoprob <- calc_genoprob(input.map)
-  }
-  if(!inherits(genoprob, "mappoly.genoprob")) {
-    stop("'", deparse(substitute(genoprob)), "' is not an object of class 'mappoly.genoprob'")
-  }
   if(!identical(names(genoprob$map), input.map$info$mrk.names)){
     warning("'", deparse(substitute(genoprob)), "' is inconsistent with 'input.map'.\n  Recalculating genoprob.")
     genoprob <- calc_genoprob(input.map)
@@ -665,7 +658,14 @@ add_marker <- function(input.map,
   }  else if (phase.config > length(LOD.conf)) {
     stop("invalid linkage phase configuration")
   } else i.lpc <- phase.config
-  
+  ## Checking genoprob
+  if(is.null(genoprob)){
+    message("Calculating genoprob.")
+    genoprob <- suppressMessages(calc_genoprob(input.map, phase.config = i.lpc))
+  }
+  if(!inherits(genoprob, "mappoly.genoprob")) {
+    stop("'", deparse(substitute(genoprob)), "' is not an object of class 'mappoly.genoprob'")
+  }
   ## Adding marker: beginning of sequence
   if(pos == 0){
     ## h: states to visit in both parents
