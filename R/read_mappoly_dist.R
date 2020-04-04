@@ -82,14 +82,18 @@
 #'     
 #' @examples
 #' \dontrun{
-#'     solcap.file <- system.file('extdata', 'SolCAP.bz2', package = 'mappoly')
-#'     dat <- read_geno_dist(file.in  = solcap.file)
-#'     print(tetra.solcap, detailed = TRUE)
-#'
-#'     ## Same data set
-#'     data("tetra.solcap.geno.dist")
-#'     
-#'     identical(tetra.solcap.geno.dist, dat)
+#' 
+#' #Loading tetraploid
+#'  tetra.file <- system.file('extdata', 'tetra_solcap_geno_dist.bz2', package = 'mappoly')
+#'  tetra.dat.dist <- read_geno_dist(file.in  = tetra.file)
+#'  print(tetra.dat.dist, detailed = TRUE)
+#'  plot(tetra.dat.dist)
+#'  
+#' #Loading hexaploid
+#'   hexa.file <- system.file('extdata', 'hexafake_geno_dist.bz2', package = 'mappoly')
+#'   hexa.dat.dist <- read_geno_dist(file.in  = hexa.file)
+#'   print(hexa.dat.dist, detailed = TRUE)
+#'   plot(hexa.dat.dist)
 #'     
 #'}
 #'
@@ -204,7 +208,7 @@ read_geno_dist <- function(file.in, prob.thres = 0.95, filter.non.conforming = T
     colnames(geno) <- c("mrk", "ind", as.character(0:m))
     mrk <- NULL
     geno<-subset(geno, mrk%in%mrk.names[id])
-    ## transforming na's in expected genotypes using mendilian segregation
+    ## transforming na's in expected genotypes using Mendilian segregation
     i.na <- which(apply(geno, 1, function(x) any(is.na(x))))
     if (length(i.na) > 0) {
         m.na <- match(geno[i.na, 1], mrk.names)
@@ -264,9 +268,9 @@ read_geno_dist <- function(file.in, prob.thres = 0.95, filter.non.conforming = T
       res$chisq.pval<-apply(M, 1, mrk_chisq_test, m = m)
       cat("\n    Done.\n")
     }
-      if (elim.redundant){
-        seqred = make_seq_mappoly(res, arg = 'all', data.name = res)
-        redun = elim_redundant(seqred, data = res)
+    seqred = make_seq_mappoly(res, arg = 'all', data.name = res)
+    redun = elim_redundant(seqred, data = res)
+      if (elim.redundant & nrow(redun$elim.correspondence)!=0){
         res$kept = redun$kept
         res$elim.correspondence = redun$elim.correspondence
         mrks.rem = match(res$elim.correspondence$elim, res$mrk.names)

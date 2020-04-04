@@ -71,12 +71,18 @@
 #' its equivalence to the redundant ones}
 #' @examples
 #' \dontrun{
-#'     hexa.file<-system.file('extdata', 'hexafake_geno', package = 'mappoly')
-#'     hexafake<-read_geno(file.in  = hexa.file)
-#'     print(hexafake, detailed = TRUE)
-#'
-#'     ## Same thing
-#'     data(hexafake)
+#' 
+#' #Loading tetraploid
+#'  tetra.file <- system.file('extdata', 'tetra_solcap_geno', package = 'mappoly')
+#'  tetra.dat <- read_geno(file.in  = tetra.file)
+#'  print(tetra.dat, detailed = TRUE)
+#'  plot(tetra.dat)
+#'  
+#' #Loading hexaploid
+#'   hexa.file <- system.file('extdata', 'hexafake_geno', package = 'mappoly')
+#'   hexa.dat <- read_geno(file.in  = hexa.file)
+#'   print(hexa.dat, detailed = TRUE)
+#'   plot(hexa.dat)
 #'}
 #' @author Marcelo Mollinari, \email{mmollin@ncsu.edu}
 #'
@@ -239,9 +245,9 @@ read_geno <- function(file.in, filter.non.conforming = TRUE, elim.redundant = TR
     res$chisq.pval<-apply(M, 1, mrk_chisq_test, m = m)
     cat("\n    Done.\n")
   }
-  if (elim.redundant){
-    seqred = make_seq_mappoly(res, arg = 'all', data.name = res)
-    redun = elim_redundant(seqred, data = res)
+  seqred = make_seq_mappoly(res, arg = 'all', data.name = res)
+  redun = elim_redundant(seqred, data = res)
+  if (elim.redundant & nrow(redun$elim.correspondence)!=0){
     res$kept = redun$kept
     res$elim.correspondence = redun$elim.correspondence
     mrks.rem = match(res$elim.correspondence$elim, res$mrk.names)

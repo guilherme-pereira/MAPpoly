@@ -998,8 +998,8 @@ check_data_sanity<-function(x){
 #' @param void interfunction to be documented
 #' @keywords internal
 check_data_dose_sanity <- function(x){
-  test<-logical(24L)
-  names(test) <- 1:24
+  test<-logical(25L)
+  names(test) <- 1:25
 
   # ploidy
   test[1] <- x$m%%2 != 0
@@ -1037,6 +1037,10 @@ check_data_dose_sanity <- function(x){
   test[23] <- !identical(names(x$dosage.p), x$mrk.names)
   test[24] <- !identical(names(x$dosage.q), x$mrk.names)
   
+  test[25] <- !identical(names(x),  c("m", "n.ind", "n.mrk", "ind.names", "mrk.names", "dosage.p", 
+                                     "dosage.q", "sequence", "sequence.pos", "seq.ref", "seq.alt",
+                                     "all.mrk.depth", "prob.thres", "geno.dose", "nphen", "phen", 
+                                     "kept", "elim.correspondence", "chisq.pval"))
   if(any(test))
     return(test)
   else
@@ -1048,8 +1052,8 @@ check_data_dose_sanity <- function(x){
 #' @param void interfunction to be documented
 #' @keywords internal
 check_data_dist_sanity <- function(x){
-  test<-logical(29L)
-  names(test) <- 1:29
+  test<-logical(30L)
+  names(test) <- 1:30
   # ploidy
   test[1] <- x$m%%2 != 0
   test[2] <- any(sapply(x$dosage.p, function(y) max(y) > x$m | min(y) < 0))
@@ -1090,6 +1094,11 @@ check_data_dist_sanity <- function(x){
   test[27] <- !is.integer(x$dosage.q)
   test[28] <- !identical(names(x$dosage.p), x$mrk.names)
   test[29] <- !identical(names(x$dosage.q), x$mrk.names)
+  
+  test[30] <- !identical(names(x), c("m", "n.ind", "n.mrk", "ind.names", "mrk.names", "dosage.p", 
+                                        "dosage.q", "sequence", "sequence.pos", "seq.ref", "seq.alt",
+                                        "all.mrk.depth", "prob.thres", "geno", "geno.dose", "nphen", "phen", 
+                                         "chisq.pval", "kept", "elim.correspondence"))
   
   if(any(test))
     return(test)

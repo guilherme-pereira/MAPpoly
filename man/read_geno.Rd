@@ -88,12 +88,18 @@ containing the dosage for each marker (rows) for each individual (columns). \cod
 }
 \examples{
 \dontrun{
-    hexa.file<-system.file('extdata', 'hexafake_geno', package = 'mappoly')
-    hexafake<-read_geno(file.in  = hexa.file)
-    print(hexafake, detailed = TRUE)
 
-    ## Same thing
-    data(hexafake)
+#Loading tetraploid
+ tetra.file <- system.file('extdata', 'tetra_solcap_geno', package = 'mappoly')
+ tetra.dat <- read_geno(file.in  = tetra.file)
+ print(tetra.dat, detailed = TRUE)
+ plot(tetra.dat)
+ 
+#Loading hexaploid
+  hexa.file <- system.file('extdata', 'hexafake_geno', package = 'mappoly')
+  hexa.dat <- read_geno(file.in  = hexa.file)
+  print(hexa.dat, detailed = TRUE)
+  plot(hexa.dat)
 }
 }
 \references{

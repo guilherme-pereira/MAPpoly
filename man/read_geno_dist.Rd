@@ -97,14 +97,18 @@ associated with each one of the possible dosages. \code{NA} represents missing d
 }
 \examples{
 \dontrun{
-    solcap.file <- system.file('extdata', 'SolCAP.bz2', package = 'mappoly')
-    dat <- read_geno_dist(file.in  = solcap.file)
-    print(tetra.solcap, detailed = TRUE)
 
-    ## Same data set
-    data("tetra.solcap.geno.dist")
-    
-    identical(tetra.solcap.geno.dist, dat)
+#Loading tetraploid
+ tetra.file <- system.file('extdata', 'tetra_solcap_geno_dist.bz2', package = 'mappoly')
+ tetra.dat.dist <- read_geno_dist(file.in  = tetra.file)
+ print(tetra.dat.dist, detailed = TRUE)
+ plot(tetra.dat.dist)
+ 
+#Loading hexaploid
+  hexa.file <- system.file('extdata', 'hexafake_geno_dist.bz2', package = 'mappoly')
+  hexa.dat.dist <- read_geno_dist(file.in  = hexa.file)
+  print(hexa.dat.dist, detailed = TRUE)
+  plot(hexa.dat.dist)
     
 }
 
