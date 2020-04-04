@@ -36,9 +36,10 @@ test_that("Data loaded correctly when using 'read_geno_dist'", {
   hexa.file <- system.file('extdata', 'hexafake_geno_dist.bz2', package = 'mappoly')
   hexa.dat.dist <- read_geno_dist(file.in  = hexa.file)
   expect_equal(check_data_sanity(hexa.dat.dist), 0)
-  expect_equivalent(as.numeric(as.matrix(hexafake.new$geno.dose))[1:20], 
-                    c(1, 0, 2, 1, 0, 2, 2, 1, 3, 2, 
-                      2, 2, 0, 1, 2, 1, 2, 2, 2, 0))
+  id <- colnames(hexafake$geno.dose)
+  M1 <- as.matrix(hexafake$geno.dose[1:5, 1:5])
+  M2 <- as.matrix(hexa.dat.dist$geno.dose[,id][1:5, 1:5])
+  expect_equivalent(M1, M2)
   expect_equal(hexafake.geno.dist, hexa.dat.dist)
 })
 
