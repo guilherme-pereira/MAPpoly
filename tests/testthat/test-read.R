@@ -29,7 +29,7 @@ test_that("Data loaded correctly when using 'read_geno_dist'", {
   expect_equivalent(as.numeric(as.matrix(tetra.dat.dist$geno.dose))[1:20], 
                     c(4, 5, 3, 2, 3, 2, 5, 5, 1, 3, 
                       1, 4, 2, 1, 3, 2, 0, 3, 2, 2))
-  expect_equal(tetra.solcap.geno.dist, tetra.dat.dist)
+  expect_equivalent(tetra.solcap.geno.dist, tetra.dat.dist)
   
   ##### Hexaploid
   expect_equal(check_data_sanity(hexafake.geno.dist), 0)
@@ -40,6 +40,6 @@ test_that("Data loaded correctly when using 'read_geno_dist'", {
   M1 <- as.matrix(hexafake$geno.dose[1:5, 1:5])
   M2 <- as.matrix(hexa.dat.dist$geno.dose[,id][1:5, 1:5])
   expect_equivalent(M1, M2)
-  expect_equal(hexafake.geno.dist, hexa.dat.dist)
+  expect_equivalent(hexafake.geno.dist, hexa.dat.dist)
 })
 

@@ -110,13 +110,14 @@ get_submap<-function(input.map, mrk.pos,  phase.config = "best", reestimate.rf =
     stop("invalid linkage phase configuration")
   } 
   else i.lpc <- phase.config
-  input.obj = get(input.map$info$data.name, pos = 1)
+  dat = get(input.map$info$data.name, pos = 1)
+  mrk.names <- input.map$info$mrk.names[mrk.pos]
+  seq.num <- match(mrk.names, dat$mrk.names)
   if(reestimate.rf & !reestimate.phase)
   {
-    seq.num<-input.map$maps[[i.lpc]]$seq.num[mrk.pos]
-    ph<-list(P = input.map$maps[[i.lpc]]$seq.ph$P[as.character(seq.num)],
-             Q = input.map$maps[[i.lpc]]$seq.ph$Q[as.character(seq.num)])
-    s<-make_seq_mappoly(input.obj = input.obj,
+    ph<-list(P = input.map$maps[[i.lpc]]$seq.ph$P[mrk.pos],
+             Q = input.map$maps[[i.lpc]]$seq.ph$Q[mrk.pos])
+    s<-make_seq_mappoly(input.obj = dat,
                         arg = seq.num, 
                         data.name = input.map$info$data.name)
     rf.temp <- NULL#input.map$maps[[i.lpc]]$seq.rf[mrk.pos[-length(mrk.pos)]]
@@ -125,8 +126,19 @@ get_submap<-function(input.map, mrk.pos,  phase.config = "best", reestimate.rf =
                            high.prec = high.prec)
     output.map<-input.map
     output.map$maps[[i.lpc]] <- res
-    output.map$info$n.mrk <- length(mrk.pos)
-    output.map$info$mrk.names <- input.map$info$mrk.names[mrk.pos]
+    ##map info
+    output.map$info$n.mrk <- length(mrk.names)
+    output.map$info$mrk.names <- mrk.names
+    output.map$info$seq.num <- seq.num
+    output.map$info$seq.dose.p <- input.map$info$seq.dose.p[mrk.names]
+    output.map$info$seq.dose.q <- input.map$info$seq.dose.q[mrk.names]
+    output.map$info$sequence <- input.map$info$sequence[mrk.names] 
+    output.map$info$sequence.pos <- input.map$info$sequence.pos[mrk.names] 
+    if(!is.null(input.map$info$seq.ref))
+      output.map$info$seq.ref <- input.map$info$seq.ref[mrk.names] 
+    if(!is.null(input.map$info$seq.alt))
+      output.map$info$seq.alt <- input.map$info$seq.alt[mrk.names]
+    output.map$info$chisq.pval <- input.map$info$chisq.pval[mrk.names] 
     return(output.map)
   }
   else if(reestimate.phase)
@@ -139,9 +151,9 @@ get_submap<-function(input.map, mrk.pos,  phase.config = "best", reestimate.rf =
       stop("
     To perform phase reestimation, please 
     provide the genotype counts.")
-    s<-make_seq_mappoly(get(input.map$info$data.name, pos = 1),
-                        input.map$maps[[i.lpc]]$seq.num[mrk.pos],
-                        input.map$info$data.name)
+    s<-make_seq_mappoly(input.obj = dat,
+                        arg = seq.num, 
+                        data.name = input.map$info$data.name)
     if(verbose)
       cat("\nEstimating pairwise recombination fraction for marker sequence ...")
     p<-est_pairwise_rf(input.seq = s, count.cache = count.cache, verbose = FALSE)
@@ -174,22 +186,22 @@ get_submap<-function(input.map, mrk.pos,  phase.config = "best", reestimate.rf =
     'est_full_hmm_with_prior_dist'")
   ##phase info
   output.map$maps[[i.lpc]]$seq.rf <- rf.vec
-  output.map$maps[[i.lpc]]$seq.num <- input.map$maps[[i.lpc]]$seq.num[mrk.pos]
+  output.map$maps[[i.lpc]]$seq.num <- seq.num
   output.map$maps[[i.lpc]]$seq.ph$P <- input.map$maps[[i.lpc]]$seq.ph$P[mrk.pos]
   output.map$maps[[i.lpc]]$seq.ph$Q <- input.map$maps[[i.lpc]]$seq.ph$Q[mrk.pos]
   output.map$maps[[i.lpc]]$loglike <- 0
   ##map info
-  output.map$info$n.mrk <- length(mrk.pos)
-  output.map$info$mrk.names <- input.map$info$mrk.names[mrk.pos]
-  output.map$info$seq.num <- input.map$info$seq.num [mrk.pos]
-  output.map$info$mrk.names <- input.map$info$mrk.names[mrk.pos]
-  output.map$info$seq.dose.p <- input.map$info$seq.dose.p[mrk.pos]
-  output.map$info$seq.dose.q <- input.map$info$seq.dose.q[mrk.pos]
-  output.map$info$sequence <- input.map$info$sequence[mrk.pos] 
-  output.map$info$sequence.pos <- input.map$info$sequence.pos[mrk.pos]  
-  output.map$info$seq.ref <- input.map$info$seq.ref[mrk.pos] 
-  output.map$info$seq.alt <- input.map$info$seq.alt[mrk.pos] 
-  output.map$info$chisq.pval <- input.map$info$chisq.pval[mrk.pos] 
-  
+  output.map$info$n.mrk <- length(mrk.names)
+  output.map$info$mrk.names <- mrk.names
+  output.map$info$seq.num <- seq.num
+  output.map$info$seq.dose.p <- input.map$info$seq.dose.p[mrk.names]
+  output.map$info$seq.dose.q <- input.map$info$seq.dose.q[mrk.names]
+  output.map$info$sequence <- input.map$info$sequence[mrk.names] 
+  output.map$info$sequence.pos <- input.map$info$sequence.pos[mrk.names]  
+  if(!is.null(input.map$info$seq.ref))
+    output.map$info$seq.ref <- input.map$info$seq.ref[mrk.names] 
+  if(!is.null(input.map$info$seq.alt))
+    output.map$info$seq.alt <- input.map$info$seq.alt[mrk.names]
+  output.map$info$chisq.pval <- input.map$info$chisq.pval[mrk.names] 
   return(output.map)
 }

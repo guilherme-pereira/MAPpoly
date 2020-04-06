@@ -6,7 +6,7 @@
 \alias{print.mappoly.unique.seq}
 \title{Eliminate redundant markers}
 \usage{
-elim_redundant(input.seq, data = NULL)
+elim_redundant(input.seq)
 
 \method{plot}{mappoly.unique.seq}(x, ...)
 
@@ -15,9 +15,9 @@ elim_redundant(input.seq, data = NULL)
 \arguments{
 \item{input.seq}{an object of class \code{mappoly.sequence}}
 
-\item{data}{name of the dataset that contains sequence markers (optional, default = NULL)}
-
 \item{...}{currently ignored}
+
+\item{data}{name of the dataset that contains sequence markers (optional, default = NULL)}
 }
 \value{
 An object of class \code{mappoly.unique.seq} which
@@ -32,8 +32,7 @@ Eliminate markers with identical dosage infomation throughout individuals.
 }
 \examples{
   \dontrun{
-    data(hexafake)
-    all.mrk<-make_seq_mappoly(hexafake, 'all')
+    all.mrk<-make_seq_mappoly(tetra.solcap.geno.dist, 'all')
     red.mrk<-elim_redundant(all.mrk)
     plot(red.mrk)
     unique.mrks<-make_seq_mappoly(red.mrk)

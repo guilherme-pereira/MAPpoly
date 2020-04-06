@@ -993,6 +993,46 @@ check_data_sanity<-function(x){
     stop("Inconsistent genotypic information.")
 }
 
+#' Eliminate redundant markers in datasets
+#'
+#' @param void interfunction to be documented
+#' @keywords internal
+elim_redundant_in_datasets<-function(dat, is.vcf = FALSE)
+{
+  dat.temp <- unique(dat$geno.dose, dimnames = TRUE)
+  if(nrow(dat.temp) == nrow(dat$geno.dose))
+    return(dat)
+  elim <- setdiff(dat$mrk.names, rownames(dat.temp))
+  n1<-apply(dat.temp, 1, paste, collapse="")
+  n2<-apply(dat$geno.dose[elim, ], 1, paste, collapse="")
+  dat$kept = rownames(dat.temp)
+  dat$elim.correspondence <- data.frame(kept = rownames(dat.temp)[match(n2,n1)], elim = elim)
+  mrks.rem = match(dat$elim.correspondence$elim, dat$mrk.names)
+  dat$elim.correspondence$sequence = dat$sequence[c(mrks.rem)]
+  dat$elim.correspondence$sequence.pos = dat$sequence.pos[c(mrks.rem)]
+  dat$elim.correspondence$seq.ref = NA
+  dat$elim.correspondence$seq.alt = NA
+  dat$elim.correspondence$all.mrk.depth = NA
+  dat$n.mrk = length(dat$kept)
+  dat$mrk.names = dat$mrk.names[-c(mrks.rem)]
+  dat$geno.dose = dat$geno.dose[-c(mrks.rem),]
+  dat$dosage.p = dat$dosage.p[-c(mrks.rem)]
+  dat$dosage.q = dat$dosage.q[-c(mrks.rem)]
+  dat$sequence = dat$sequence[-c(mrks.rem)]
+  dat$sequence.pos = dat$sequence.pos[-c(mrks.rem)]
+  dat$chisq.pval = dat$chisq.pval[-c(mrks.rem)]
+  if(is.vcf){
+    dat$elim.correspondence$seq.ref = dat$seq.ref[c(mrks.rem)]
+    dat$elim.correspondence$seq.alt = dat$seq.alt[c(mrks.rem)]
+    dat$elim.correspondence$all.mrk.depth = dat$all.mrk.depth[c(mrks.rem)]
+  }
+  if("geno"%in%names(dat)){
+    mrk <- NULL
+    dat$geno <- dat$geno %>% dplyr::filter(mrk%in%rownames(dat$geno.dose))    
+  }
+  return(dat)
+}
+
 #' Checks the consistency of dataset (dosage)
 #'
 #' @param void interfunction to be documented

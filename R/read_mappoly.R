@@ -245,25 +245,8 @@ read_geno <- function(file.in, filter.non.conforming = TRUE, elim.redundant = TR
     res$chisq.pval<-apply(M, 1, mrk_chisq_test, m = m)
     cat("\n    Done.\n")
   }
-  seqred = make_seq_mappoly(res, arg = 'all', data.name = res)
-  redun = elim_redundant(seqred, data = res)
-  if (elim.redundant & nrow(redun$elim.correspondence)!=0){
-    res$kept = redun$kept
-    res$elim.correspondence = redun$elim.correspondence
-    mrks.rem = match(res$elim.correspondence$elim, res$mrk.names)
-    res$elim.correspondence$sequence = res$sequence[c(mrks.rem)]
-    res$elim.correspondence$sequence.pos = res$sequence.pos[c(mrks.rem)]
-    res$elim.correspondence$seq.ref = NA
-    res$elim.correspondence$seq.alt = NA
-    res$elim.correspondence$all.mrk.depth = NA
-    res$n.mrk = length(res$kept)
-    res$mrk.names = res$mrk.names[-c(mrks.rem)]
-    res$geno.dose = res$geno.dose[-c(mrks.rem),]
-    res$dosage.p = res$dosage.p[-c(mrks.rem)]
-    res$dosage.q = res$dosage.q[-c(mrks.rem)]
-    res$sequence = res$sequence[-c(mrks.rem)]
-    res$sequence.pos = res$sequence.pos[-c(mrks.rem)]
-    res$chisq.pval = res$chisq.pval[-c(mrks.rem)]
+  if (elim.redundant){
+    return(elim_redundant_in_datasets(res))
   }
   return(res)
 }

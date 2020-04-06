@@ -17,8 +17,7 @@
 #'
 #' @examples
 #'   \dontrun{
-#'     data(hexafake)
-#'     all.mrk<-make_seq_mappoly(hexafake, 'all')
+#'     all.mrk<-make_seq_mappoly(tetra.solcap.geno.dist, 'all')
 #'     red.mrk<-elim_redundant(all.mrk)
 #'     plot(red.mrk)
 #'     unique.mrks<-make_seq_mappoly(red.mrk)
@@ -34,22 +33,16 @@
 #'     \url{https://doi.org/10.1534/g3.119.400378} 
 #'
 #' @export elim_redundant
-elim_redundant<-function(input.seq, data = NULL)
+elim_redundant<-function(input.seq)
 {
-  if (is.null(data)) x<-get(input.seq$data.name, pos = 1)$geno.dose[input.seq$seq.num, ]
-  else x = data$geno.dose[input.seq$seq.num, ]
-    dat_temp <- unique(x, dimnames = TRUE)
-    if (is.null(data)) output.seq <- make_seq_mappoly(get(input.seq$data.name, pos = 1), rownames(dat_temp), data.name = input.seq$data.name)
-    else output.seq <- make_seq_mappoly(data, rownames(dat_temp), data.name = data)
-  output.seq$chisq.pval.thres <-input.seq$chisq.pval.thres
-  output.seq$chisq.pval <-input.seq$chisq.pval
-  if (is.null(data)) mrknames <- get(input.seq$data.name, pos = 1)$mrk.names
-  else mrknames <- data$mrk.names
-  elim<-setdiff(input.seq$seq.num,output.seq$seq.num)
+  x<-get(input.seq$data.name, pos = 1)
+  dat_temp <- unique(x$geno.dose[input.seq$seq.mrk.names, ], dimnames = TRUE)
+  output.seq <- make_seq_mappoly(x, rownames(dat_temp),data.name = input.seq$data.name)
+  elim<-setdiff(input.seq$seq.mrk.names, output.seq$seq.mrk.names)
   n1<-apply(dat_temp, 1, paste, collapse="")
-  n2<-apply(x[mrknames[elim],], 1, paste, collapse="")
-  elim.out <- data.frame(kept = rownames(dat_temp)[match(n2,n1)], elim = mrknames[elim])
-  structure(list(unique.seq = output.seq, kept = mrknames[output.seq$seq.num],
+  n2<-apply(x$geno.dose[elim, ], 1, paste, collapse="")
+  elim.out <- data.frame(kept = rownames(dat_temp)[match(n2,n1)], elim = elim)
+  structure(list(unique.seq = output.seq, kept = output.seq$seq.mrk.names,
                  elim.correspondence =  elim.out),
             class = "mappoly.unique.seq")
 }
