@@ -3,7 +3,7 @@
 #' @param void interfunction to be documented
 #' @keywords internal
 #' @export
-filter_non_conforming_classes<-function(input.data, prob.thres = NULL)
+filter_non_conforming_classes <- function(input.data, prob.thres = NULL)
 {
   m<-input.data$m
   dp<-input.data$dosage.p
@@ -74,7 +74,7 @@ filter_non_conforming_classes<-function(input.data, prob.thres = NULL)
 #' @importFrom magrittr "%>%"
 #' @importFrom dplyr filter
 #' @importFrom graphics axis
-filter_missing<-function(input.data, 
+filter_missing <- function(input.data, 
                          type = c("marker", "individual"), 
                          filter.thres = 0.2, 
                          inter = TRUE)
@@ -100,7 +100,7 @@ filter_missing<-function(input.data,
 #' @importFrom magrittr "%>%"
 #' @importFrom dplyr filter
 #' @importFrom graphics axis
-filter_missing_mrk<-function(input.data, filter.thres = 0.2, inter = TRUE)
+filter_missing_mrk <- function(input.data, filter.thres = 0.2, inter = TRUE)
 {
   ANSWER <- "flag"
   mrk <- NULL
@@ -175,7 +175,7 @@ filter_missing_mrk<-function(input.data, filter.thres = 0.2, inter = TRUE)
 #' @importFrom magrittr "%>%"
 #' @importFrom dplyr filter
 #' @importFrom graphics axis
-filter_missing_ind<-function(input.data, filter.thres = 0.2, inter = TRUE)
+filter_missing_ind <- function(input.data, filter.thres = 0.2, inter = TRUE)
 {
   ANSWER <- "flag"
   ind <- NULL
@@ -285,7 +285,7 @@ filter_missing_ind<-function(input.data, filter.thres = 0.2, inter = TRUE)
 #'     
 #' @importFrom graphics axis
 #' @export
-filter_segregation<-function(input.data, chisq.pval.thres = 10e-5, inter = TRUE){
+filter_segregation <- function(input.data, chisq.pval.thres = 10e-5, inter = TRUE){
   ANSWER <- "flag"
   op<-par(bg = "gray", xpd = TRUE)
   if(interactive() && inter)

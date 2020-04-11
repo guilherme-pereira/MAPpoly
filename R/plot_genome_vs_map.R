@@ -20,7 +20,7 @@
 #'     \url{https://doi.org/10.1534/g3.119.400378}
 #'
 #' @export plot_genome_vs_map
-plot_genome_vs_map<-function(map.list, config = "best"){
+plot_genome_vs_map <- function(map.list, config = "best"){
   if(class(map.list) == "mappoly.map")  
     map.list<-list(map.list)
   if(any(sapply(map.list, class)!="mappoly.map"))

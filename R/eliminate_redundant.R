@@ -33,7 +33,7 @@
 #'     \url{https://doi.org/10.1534/g3.119.400378} 
 #'
 #' @export elim_redundant
-elim_redundant<-function(input.seq)
+elim_redundant <- function(input.seq)
 {
   x<-get(input.seq$data.name, pos = 1)
   dat_temp <- unique(x$geno.dose[input.seq$seq.mrk.names, ], dimnames = TRUE)
@@ -50,7 +50,7 @@ elim_redundant<-function(input.seq)
 #' @rdname elim_redundant
 #' @keywords internal
 #' @export
-plot.mappoly.unique.seq<-function(x, ...)
+plot.mappoly.unique.seq <- function(x, ...)
 {
   slc <- c(nrow(x$elim.correspondence), length(x$kept))
   lbls <- c("eliminated", "kept")
@@ -63,7 +63,7 @@ plot.mappoly.unique.seq<-function(x, ...)
 #' @rdname elim_redundant
 #' @keywords internal
 #' @export
-print.mappoly.unique.seq<-function(x, ...)
+print.mappoly.unique.seq <- function(x, ...)
 {
   print(x$unique.seq)
   cat("------------\n")

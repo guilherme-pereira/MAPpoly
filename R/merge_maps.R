@@ -95,7 +95,7 @@
 #'}
 #' 
 #' @export
-merge_maps<-function(input.map1, 
+merge_maps <- function(input.map1, 
                      input.map2, 
                      twopt,
                      thres.twopt = 3,

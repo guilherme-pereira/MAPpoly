@@ -75,7 +75,7 @@
 #'     
 #' @export import_from_updog
 #' 
-import_from_updog = function(object, prob.thres = NULL, filter.non.conforming = FALSE){
+import_from_updog <- function(object, prob.thres = NULL, filter.non.conforming = FALSE){
   # Case 1: updog
   if (class(object) == "multidog"){
     m = object$snpdf$ploidy[1]

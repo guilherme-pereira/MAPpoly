@@ -124,7 +124,7 @@
 #'
 #' @export read_vcf
 #' 
-read_vcf = function(file.in, parent.1, parent.2, ploidy = NA, 
+read_vcf <- function(file.in, parent.1, parent.2, ploidy = NA, 
                     filter.non.conforming = TRUE, thresh.line = 0.05, 
                     min.gt.depth = 0, min.av.depth = 0, max.missing = 1, 
                     elim.redundant = TRUE) {
@@ -180,12 +180,12 @@ read_vcf = function(file.in, parent.1, parent.2, ploidy = NA,
   if (!is.na(ploidy) && (ploidy > 2) && all(file.ploidy == 2)){ # Checking absence of dosages
     warning("Informed ploidy is ",ploidy, ", but detected ploidy is ", file.ploidy, ".\nIf your species is polyploid, you should provide allelic dosages for all individuals. You can estimate allelic dosages using packages such as 'SuperMASSA', 'updog', 'fitTetra', 'polyRAD' and others. We are working on an integrated function to estimate dosages, which will be available soon.\nUsing ploidy = 2 instead.")
   } # Allow option for building genetic maps for diploid species
-    if (!is.na(ploidy)){ # If ploidy is informed and passed previous checks, then use it
-        m = ploidy
-    } else { # Else, use the first ploidy level detected on file
-        m = file.ploidy[1]
-    }
-    cat("Selected ploidy:", m, "\n")
+  if (!is.na(ploidy)){ # If ploidy is informed and passed previous checks, then use it
+    m = ploidy
+  } else { # Else, use the first ploidy level detected on file
+    m = file.ploidy[1]
+  }
+  cat("Selected ploidy:", m, "\n")
   if (!(parent.1 %in% ind.names) | !(parent.2 %in% ind.names)){
     stop("Provided parents were not found in VCF file. Please check it and try again.")
   }
@@ -196,34 +196,35 @@ read_vcf = function(file.in, parent.1, parent.2, ploidy = NA,
   #       } else {geno.dose[i] = length(which(unlist(strsplit(geno.dose[i], "/")) == 0))} # Transforming dosages (time consuming step)
   #      }
   # geno.dose = matrix(as.numeric(geno.dose), nrow = n.mrk, byrow = F)
-
-    ## Updating some info
-    dif_ploidy = which(rowSums(geno.ploidy == m) == (n.ind+2)) # Markers with different ploidy levels
-    all_mrk_depth = rowMeans(geno.depth)
-    av_depth = which(all_mrk_depth >= min.av.depth) # Markers with average depths below threshold
-    max_miss = which(rowSums(is.na(geno.dose))/dim(geno.dose)[2] <= max.missing) # Markers with missing data above the threshold
-    selected_markers = intersect(intersect(dif_ploidy,av_depth),max_miss) # Selecting markers that passed all thresholds
-    geno.dose = geno.dose[selected_markers,] # Selecting markers
-    geno.dose[which(geno.dose < min.gt.depth)] = NA # removing genotypes with depths below the threshold
-    all_mrk_depth = all_mrk_depth[selected_markers]
-    n.mrk = nrow(geno.dose)
-    sequence = sequence[selected_markers]
-    sequence.pos = sequence.pos[selected_markers]
-    seq.ref = seq.ref[selected_markers]
-    seq.alt = seq.alt[selected_markers]
-    mrk.names = mrk.names[selected_markers]
-    ## sequence = sequence[which(rowSums(geno.ploidy == m) == (n.ind+2))]
-    ## sequence.pos = sequence.pos[which(rowSums(geno.ploidy == m) == (n.ind+2))]
-    ## seq.ref = seq.ref[which(rowSums(geno.ploidy == m) == (n.ind+2))]
-    ## seq.alt = seq.alt[which(rowSums(geno.ploidy == m) == (n.ind+2))]
-    ## mrk.names = mrk.names[which(rowSums(geno.ploidy == m) == (n.ind+2))]
-    colnames(geno.dose) = ind.names
-    rownames(geno.dose) = mrk.names
-    dosage.p = geno.dose[,which(colnames(geno.dose) == parent.1)] # Selecting dosages for parent 1
-    dosage.q = geno.dose[,which(colnames(geno.dose) == parent.2)] # Selecting dosages for parent 2
-    geno.dose = geno.dose[, -c(which(colnames(geno.dose) %in% c(parent.1, parent.2)))] # Updating geno.dose matrix
-    ind.names = ind.names[-c(which(ind.names %in% c(parent.1, parent.2)))] # Updating individual names
-    geno.dose = data.frame(geno.dose)
+  
+  ## Updating some info
+  dif_ploidy = which(rowSums(geno.ploidy == m) == (n.ind+2)) # Markers with different ploidy levels
+  all_mrk_depth = rowMeans(geno.depth)
+  av_depth = which(all_mrk_depth >= min.av.depth) # Markers with average depths below threshold
+  max_miss = which(rowSums(is.na(geno.dose))/dim(geno.dose)[2] <= max.missing) # Markers with missing data above the threshold
+  selected_markers = intersect(intersect(dif_ploidy,av_depth),max_miss) # Selecting markers that passed all thresholds
+  geno.dose = geno.dose[selected_markers,] # Selecting markers
+  geno.dose[which(geno.dose < min.gt.depth)] = NA # removing genotypes with depths below the threshold
+  all_mrk_depth = all_mrk_depth[selected_markers]
+  n.mrk = nrow(geno.dose)
+  sequence = sequence[selected_markers]
+  sequence.pos = sequence.pos[selected_markers]
+  seq.ref = seq.ref[selected_markers]
+  seq.alt = seq.alt[selected_markers]
+  mrk.names = mrk.names[selected_markers]
+  ## sequence = sequence[which(rowSums(geno.ploidy == m) == (n.ind+2))]
+  ## sequence.pos = sequence.pos[which(rowSums(geno.ploidy == m) == (n.ind+2))]
+  ## seq.ref = seq.ref[which(rowSums(geno.ploidy == m) == (n.ind+2))]
+  ## seq.alt = seq.alt[which(rowSums(geno.ploidy == m) == (n.ind+2))]
+  ## mrk.names = mrk.names[which(rowSums(geno.ploidy == m) == (n.ind+2))]
+  colnames(geno.dose) = ind.names
+  rownames(geno.dose) = mrk.names
+  dosage.p = as.integer(geno.dose[,which(colnames(geno.dose) == parent.1)]) # Selecting dosages for parent 1
+  dosage.q = as.integer(geno.dose[,which(colnames(geno.dose) == parent.2)]) # Selecting dosages for parent 2
+  names(dosage.q) <- names(dosage.p) <- mrk.names  
+  geno.dose = geno.dose[, -c(which(colnames(geno.dose) %in% c(parent.1, parent.2)))] # Updating geno.dose matrix
+  ind.names = ind.names[-c(which(ind.names %in% c(parent.1, parent.2)))] # Updating individual names
+  geno.dose = data.frame(geno.dose)
   
   ## monomorphic markers
   dp = abs(abs(dosage.p-(m/2))-(m/2))
@@ -260,48 +261,48 @@ read_vcf = function(file.in, parent.1, parent.2, ploidy = NA,
   geno.dose[is.na(geno.dose)] <- m + 1
   ## returning the 'mappoly.data' object
   cat("\n    Done with reading.\n")
-    
-    res = structure(list(m = m,
-                         n.ind = n.ind,
-                         n.mrk = sum(id),
-                         ind.names = ind.names,
-                         mrk.names = mrk.names[id],
-                         dosage.p = dosage.p[id],
-                         dosage.q = dosage.q[id],
-                         sequence = sequence[id],
-                         sequence.pos = sequence.pos[id],
-                         seq.ref = seq.ref[id],
-                         seq.alt = seq.alt[id],
-                         prob.thres = NULL,
-                         geno.dose = geno.dose[id,],
-                         nphen = 0,
-                         phen = NULL,
-                         all.mrk.depth = all_mrk_depth[id],
-                         kept = NULL,
-                         elim.correspondence = NULL
-                         ),
-                    class = "mappoly.data")
+  
+  res = structure(list(m = m,
+                       n.ind = n.ind,
+                       n.mrk = sum(id),
+                       ind.names = ind.names,
+                       mrk.names = mrk.names[id],
+                       dosage.p = dosage.p[id],
+                       dosage.q = dosage.q[id],
+                       sequence = sequence[id],
+                       sequence.pos = sequence.pos[id],
+                       seq.ref = seq.ref[id],
+                       seq.alt = seq.alt[id],
+                       all.mrk.depth = all_mrk_depth[id],
+                       prob.thres = NULL,
+                       geno.dose = geno.dose[id,],
+                       nphen = 0,
+                       phen = NULL,
+                       kept = NULL,
+                       elim.correspondence = NULL
+  ),
+  class = "mappoly.data")
   
   if(filter.non.conforming){
     cat("    Filtering non-conforming markers.\n    ...")
     res<-filter_non_conforming_classes(res)
-    cat("\n    Performing chi-square test.\n    ...")
-    ##Computing chi-square p.values
-    Ds <- array(NA, dim = c(m+1, m+1, m+1))
-    for(i in 0:m)
-      for(j in 0:m)
-        Ds[i+1,j+1,] <- segreg_poly(m = m, dP = i, dQ = j)
-    Dpop<-cbind(res$dosage.p, res$dosage.q)
-    M<-t(apply(Dpop, 1, function(x) Ds[x[1]+1, x[2]+1,]))
-    dimnames(M)<-list(res$mrk.names, c(0:m))
-    M<-cbind(M, res$geno.dose)
-    res$chisq.pval<-apply(M, 1, mrk_chisq_test, m = m)
-    cat("\n    Done.\n")
   }
-    if (elim.redundant){
-      return(elim_redundant_in_datasets(res, is.vcf = TRUE))
-    }
-    return(res)
+  cat("\n    Performing chi-square test.\n    ...")
+  ##Computing chi-square p.values
+  Ds <- array(NA, dim = c(m+1, m+1, m+1))
+  for(i in 0:m)
+    for(j in 0:m)
+      Ds[i+1,j+1,] <- segreg_poly(m = m, dP = i, dQ = j)
+  Dpop<-cbind(res$dosage.p, res$dosage.q)
+  M<-t(apply(Dpop, 1, function(x) Ds[x[1]+1, x[2]+1,]))
+  dimnames(M)<-list(res$mrk.names, c(0:m))
+  M<-cbind(M, res$geno.dose)
+  res$chisq.pval<-apply(M, 1, mrk_chisq_test, m = m)
+  cat("\n    Done.\n")
+  if (elim.redundant){
+    return(elim_redundant_in_datasets(res, is.vcf = TRUE))
+  }
+  return(res)
 }
 
 #' Function read.vcfR adapted from package vcfR 
@@ -309,7 +310,7 @@ read_vcf = function(file.in, parent.1, parent.2, ploidy = NA,
 #' @keywords internal
 #' 
 #' @importFrom memuse howbig
-.read.vcfR = function(file, limit = 1e+07, nrows = -1, skip = 0, cols = NULL, 
+.read.vcfR <- function(file, limit = 1e+07, nrows = -1, skip = 0, cols = NULL, 
                       convertNA = TRUE, checkFile = TRUE, verbose = TRUE) 
 {
   if (!is.character(file)) {

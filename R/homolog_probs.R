@@ -61,7 +61,7 @@
 #' @importFrom ggplot2 ggplot geom_density ggtitle facet_grid theme_minimal ylab xlab aes vars
 #' @importFrom plotly ggplotly
 #' 
-calc_homoprob<-function(input.genoprobs){
+calc_homoprob <- function(input.genoprobs){
   if(class(input.genoprobs) == "mappoly.genoprob")
     input.genoprobs <- list(input.genoprobs)
   if(class(input.genoprobs) == "list"){
@@ -95,14 +95,14 @@ calc_homoprob<-function(input.genoprobs){
 #' @rdname calc_homoprob
 #' @keywords internal
 #' @export
-print.mappoly.homoprob<-function(x, ...){
+print.mappoly.homoprob <- function(x, ...){
   head(x$homoprob, 20)
 }
 
 #' @rdname calc_homoprob
 #' @keywords internal
 #' @export
-plot.mappoly.homoprob<-function(x, stack = FALSE, lg = NULL, 
+plot.mappoly.homoprob <- function(x, stack = FALSE, lg = NULL, 
                                 ind = NULL, use.plotly = TRUE, ...){
   all.ind<-as.character(unique(x$homoprob$individual))
   #### Individual handling ####

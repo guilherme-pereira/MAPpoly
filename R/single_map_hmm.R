@@ -4,37 +4,41 @@
 #' @keywords internal
 #' @examples
 #'   \dontrun{
-#'     seq.all.mrk <- make_seq_mappoly(hexafake, 'all')
-#'     id <- get_genomic_order(seq.all.mrk)
-#'     counts <- cache_counts_twopt(seq.all.mrk, cached=TRUE)
-#'     seq5 <- make_seq_mappoly(hexafake, rownames(id)[1:5])
-#'     twopt<-est_pairwise_rf(seq5, counts)
-#'     
-#'     ## Using the first 10 markers 
-#'     l5 <- ls_linkage_phases(input.seq = seq5, thres = 5, twopt = twopt)
-#'     plot(l5)
-#'     
-#'     ## Evaluating 9 linkage phase configurations using HMM
-#'     maps1 <- vector("list", length(l5$config.to.test))
-#'     for(i in 1:length(maps1))
-#'     maps1[[i]] <- est_rf_hmm_single(seq5, l5$config.to.test[[i]], 
-#'                                    tol = 10e-3, verbose = TRUE, 
-#'                                    high.prec = FALSE)
-#'    (best<-which.max(sapply(maps1, function(x) x$loglike)))
-#'    dist1<-round(cumsum(c(0, imf_h(maps1[[best]]$seq.rf))),2)
-#'    
-#'    ## Same thing using automatic search
-#'    maps2<-est_rf_hmm(input.seq = seq5, twopt = twopt, thres = 5, 
-#'                      verbose = TRUE, tol = 10e-3, high.prec = FALSE)
-#'    plot(maps2)
-#'    dist1
-#'  }
+#' seq.all.mrk <- make_seq_mappoly(tetra.solcap, 'all')
+#' id <- get_genomic_order(seq.all.mrk)
+#' counts <- cache_counts_twopt(seq.all.mrk, cached = TRUE)
+#' ## Using 10 contigous markers 
+#' seq10 <- make_seq_mappoly(tetra.solcap, rownames(id)[1:10])
+#' twopt<-est_pairwise_rf(seq10, counts)
+#' l10 <- ls_linkage_phases(input.seq = seq10, thres = 10, twopt = twopt)
+#' plot(l10)
+#' ## Evaluating 6 linkage phase configurations using HMM
+#' maps1 <- vector("list", length(l10$config.to.test))
+#' for(i in 1:length(maps1))
+#'   maps1[[i]] <- est_rf_hmm_single(input.seq = seq10,
+#'                                   input.ph.single = l10$config.to.test[[i]],
+#'                                   tol = 10e-3, 
+#'                                   verbose = TRUE,
+#'                                   high.prec = FALSE)
+#' (best<-which.max(sapply(maps1, function(x) x$loglike)))
+#' dist1<-cumsum(c(0, imf_h(maps1[[best]]$seq.rf)))
+#' ## Same thing using automatic search
+#' maps2 <- est_rf_hmm(input.seq = seq10, 
+#'                     twopt = twopt, 
+#'                     thres = 10, 
+#'                     verbose = TRUE, 
+#'                     tol = 10e-3, 
+#'                     high.prec = FALSE)
+#' plot(maps2, mrk.names = TRUE)
+#' identical(dist1, extract_map(maps2))
+#' identical(maps1[[best]]$loglike, maps2$maps[[1]]$loglike)
+#' }
 #' @author Marcelo Mollinari, \email{mmollin@ncsu.edu}
 #' @export est_rf_hmm_single
-est_rf_hmm_single<-function(input.seq,
+est_rf_hmm_single <- function(input.seq,
                             input.ph.single,
                             rf.temp = NULL,
-                            tol,
+                            tol = 10e-4,
                             verbose = FALSE,
                             ret.map.no.rf.estimation = FALSE,
                             high.prec = TRUE,
@@ -44,15 +48,15 @@ est_rf_hmm_single<-function(input.seq,
   if (!inherits(input.seq, input_classes[1])) {
     stop(deparse(substitute(input.seq)), " is not an object of class 'mappoly.sequence'")
   }
-  if(length(input.seq$seq.num) == 1)
+  if(length(input.seq$seq.mrk.names) == 1)
     stop("Input sequence contains only one marker.", call. = FALSE)
   if(is.null(rf.temp))
-    rf.temp<-rep(0.001, length(input.seq$seq.num)-1)
+    rf.temp<-rep(0.001, length(input.seq$seq.mrk.names)-1)
   if(!ret.map.no.rf.estimation)
   {
-    D<-get(input.seq$data.name, pos=1)$geno.dose[input.seq$seq.num,]
-    dp <- get(input.seq$data.name)$dosage.p[input.seq$seq.num]
-    dq <- get(input.seq$data.name)$dosage.q[input.seq$seq.num]
+    D<-get(input.seq$data.name, pos=1)$geno.dose[input.seq$seq.mrk.names,]
+    dp <- get(input.seq$data.name)$dosage.p[input.seq$seq.mrk.names]
+    dq <- get(input.seq$data.name)$dosage.q[input.seq$seq.mrk.names]
     for (j in 1:nrow(D))
       D[j, D[j, ] == input.seq$m + 1] <- dp[j] + dq[j] + 1 + as.numeric(dp[j]==0 || dq[j]==0)
 

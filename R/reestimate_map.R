@@ -38,7 +38,7 @@
 #'     
 #' @export reest_rf
 #' 
-reest_rf<-function(input.map, input.mat = NULL, tol = 10e-3,  phase.config = "all",
+reest_rf <- function(input.map, input.mat = NULL, tol = 10e-3,  phase.config = "all",
                     method = c("hmm", "ols"), weight = TRUE, verbose = TRUE, 
                    high.prec = FALSE, max.rf.to.break.EM = 0.5)
 {

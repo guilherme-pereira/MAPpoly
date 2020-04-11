@@ -43,7 +43,7 @@
 #'
 #' @export
 #' 
-make_mat_mappoly<-function(input.mat, input.seq){
+make_mat_mappoly <- function(input.mat, input.seq){
   ## checking for correct object
   input_classes1 <- c("mappoly.sequence")
   if (!inherits(input.seq, input_classes1)) {

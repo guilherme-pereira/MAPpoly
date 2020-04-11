@@ -60,7 +60,7 @@
 #'
 #' @export calc_genoprob
 #'
-calc_genoprob<-function(input.map, step = 0,  phase.config = "best", verbose = TRUE)
+calc_genoprob <- function(input.map, step = 0,  phase.config = "best", verbose = TRUE)
 {
   if (!inherits(input.map, "mappoly.map")) {
     stop(deparse(substitute(input.map)), " is not an object of class 'mappoly.map'")
@@ -131,7 +131,6 @@ calc_genoprob<-function(input.map, step = 0,  phase.config = "best", verbose = T
                                   mrknames, indnames)
   structure(list(probs = res.temp[[1]], map = map.pseudo), class="mappoly.genoprob")
 }
-
 #' @rdname calc_genoprob
 #' @keywords internal
 #' @export
@@ -150,7 +149,7 @@ cat("\n  No. genotypic classes:                    ", dim(x$probs)[1], "\n")
 #' @param void interfunction to be documented
 #' @keywords internal
 #' @export
-create_map<-function(input.map, step = 0,
+create_map <- function(input.map, step = 0,
                      phase.config = "best")
 {
   ## choosing the linkage phase configuration

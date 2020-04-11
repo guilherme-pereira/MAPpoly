@@ -17,7 +17,7 @@
 #' @param void interfunction to be documented
 #' @keywords internal
 #'
-sim_cross_one_informative_parent<-function(m,
+sim_cross_one_informative_parent <- function(m,
                                            n.mrk,
                                            rf.vec,
                                            hom.allele,
@@ -107,7 +107,7 @@ sim_cross_one_informative_parent<-function(m,
 #'                                      }
 #' @keywords internal
 #' @export
-sim_cross_two_informative_parents<-function(m,
+sim_cross_two_informative_parents <- function(m,
                                            n.mrk,
                                            rf.vec,
                                            n.ind,
@@ -141,7 +141,7 @@ sim_cross_two_informative_parents<-function(m,
 #' @param void interfunction to be documented
 #' @importFrom grDevices pdf dev.off
 #' @keywords internal
-draw_cross<-function(m,rf.vec=NULL,hom.allele.p,hom.allele.q, file=NULL, width=12, height=6){
+draw_cross <- function(m,rf.vec=NULL,hom.allele.p,hom.allele.q, file=NULL, width=12, height=6){
     if(!is.null(file))
         pdf(file, width=width, height=height)
     par(xaxt="n")

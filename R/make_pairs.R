@@ -66,7 +66,7 @@
 #'
 #' @export
 
-make_pairs_mappoly<-function(input.twopt, input.seq){
+make_pairs_mappoly <- function(input.twopt, input.seq){
   ## checking for correct object
   input_classes1 <- c("mappoly.sequence")
   if (!inherits(input.seq, input_classes1)) {

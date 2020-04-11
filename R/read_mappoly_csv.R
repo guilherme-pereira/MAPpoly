@@ -57,9 +57,7 @@
 #'     solcap.file <- system.file('extdata', 'tetra_solcap.csv', package = 'mappoly')
 #'     tetra.solcap <- read_geno_csv(file.in  = solcap.file, ploidy = 4)
 #'     print(tetra.solcap, detailed = TRUE)
-#'
-#'     ## Same thing
-#'     data("tetra.solcap")
+#'     plot(tetra.solcap)
 #'}
 #' @author Marcelo Mollinari, \email{mmollin@ncsu.edu}
 #'

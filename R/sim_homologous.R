@@ -54,7 +54,7 @@
 #'     \url{https://doi.org/10.1534/g3.119.400378}
 #'
 #' @export
-sim_homologous<-function(m, n.mrk, min.d = 0, 
+sim_homologous <- function(m, n.mrk, min.d = 0, 
                          max.d = m+1, prob.dose = NULL,
                          max.ph, restriction=TRUE, 
                          seed=NULL)

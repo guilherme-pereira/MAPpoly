@@ -26,7 +26,7 @@
 #'
 #' @export loglike_hmm
 #' 
-loglike_hmm<-function(input.map, verbose = FALSE)
+loglike_hmm <- function(input.map, verbose = FALSE)
 {
   ## Checking class of arguments
   if(!inherits(input.map, "mappoly.map")) {

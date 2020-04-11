@@ -9,7 +9,7 @@
 #'
 #' @export genotyping_global_error
 #'
-genotyping_global_error<-function(x, m, restricted = TRUE,  error=0.01, th.prob=0.95)
+genotyping_global_error <- function(x, m, restricted = TRUE,  error=0.01, th.prob=0.95)
 {
   if(restricted){
     x1 <- x[1:(m+1)]

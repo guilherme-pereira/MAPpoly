@@ -9,7 +9,7 @@
 ## #'
 ## #' @author Gabriel Gesteira, \email{gabrielgesteira@usp.br}
 ## #' @export
-## est_map_parallel = function(data, markers, partial_tpt, n.batches = 4, n.cores = 4, platform = 'auto', 
+## est_map_parallel <- function(data, markers, partial_tpt, n.batches = 4, n.cores = 4, platform = 'auto', 
 ##                             start.set = 5, thres.twopt = 10, thres.hmm = 10, info.tail = TRUE, 
 ##                             submap.size.diff = 3, thres.twopt2 = 3, thres.hmm2 = 10, phase.n.lim = 20,
 ##                             tol = 1e-3) {
@@ -98,7 +98,7 @@
 ## #'
 ## #' @author Gabriel Gesteira, \email{gabrielgesteira@usp.br}
 ## #'
-## submap_merge = function(submaps, tpt, n.cores, platform, thres.twopt2, thres.hmm2, tol)
+## submap_merge <- function(submaps, tpt, n.cores, platform, thres.twopt2, thres.hmm2, tol)
 ## {
 ##     ## Getting submaps two-by-two
 ##     combs = length(submaps)%/%2
@@ -160,7 +160,7 @@
 ## ##' 
 ## ##' @keywords internal
 ## ##' 
-## func.sequential = function(x,start.set,thres.twopt,thres.hmm,submap.size.diff,phase.n.lim,tol){
+## func.sequential <- function(x,start.set,thres.twopt,thres.hmm,submap.size.diff,phase.n.lim,tol){
 ##     y = est_rf_hmm_sequential(input.seq = x$seq,
 ##                               start.set = start.set,
 ##                               thres.twopt = thres.twopt,
@@ -181,7 +181,7 @@
 ## ##' 
 ## ##' @keywords internal
 ## ##' 
-## func.merge = function(x,tpt,thres.twopt2,thres.hmm2,tol){
+## func.merge <- function(x,tpt,thres.twopt2,thres.hmm2,tol){
 ##     y = merge_maps(x[[1]],
 ##                    x[[2]],
 ##                    tpt,
@@ -203,7 +203,7 @@
 ## ##' 
 ## ##' @author Gabriel Gesteira, \email{gabrielgesteira@usp.br}
 ## ##'
-## ## check_gaps = function(map, tpt, max.gap = 0.1, window = 10){
+## ## check_gaps <- function(map, tpt, max.gap = 0.1, window = 10){
 ## ##     gaps = which(map$maps[[1]]$seq.rf >= max.gap)
 ## ##     if (length(gaps) >= 1){
 ## ##         mat.rf = rf_list_to_matrix(tpt)
@@ -249,7 +249,7 @@
 ## ##'
 ## ##' @author Gabriel Gesteira
 ## ##' 
-## # check_phases = function(map1, map2, verbose = TRUE){
+## # check_phases <- function(map1, map2, verbose = TRUE){
 ## #     ## Defining arguments
 ## #     ploidy = map1$info$m
 ## #     mrks.1 = map1$info$mrk.names

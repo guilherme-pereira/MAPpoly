@@ -56,7 +56,7 @@
 #'
 #' @export est_full_hmm_with_prior_dist
 #'
-est_full_hmm_with_prior_dist<-function(input.map, phase.config = "best", 
+est_full_hmm_with_prior_dist <- function(input.map, phase.config = "best", 
                                        tol = 10e-4, verbose = TRUE)
 {
   if (!inherits(input.map, "mappoly.map")) {

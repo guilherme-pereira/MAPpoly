@@ -51,7 +51,7 @@
 #' @importFrom gridExtra grid.arrange
 #' @importFrom reshape melt
 #' 
-calc_prefpair_profiles<-function(input.genoprobs){
+calc_prefpair_profiles <- function(input.genoprobs){
   if(class(input.genoprobs) == "mappoly.genoprob")
     input.genoprobs <- list(input.genoprobs)
   if(class(input.genoprobs) == "list"){

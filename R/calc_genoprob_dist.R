@@ -60,7 +60,7 @@
 #'
 #' @export calc_genoprob_dist
 #'
-calc_genoprob_dist<-function(input.map, dat.dist, phase.config = "best", verbose = TRUE)
+calc_genoprob_dist <- function(input.map, dat.dist, phase.config = "best", verbose = TRUE)
 {
   if (!inherits(input.map, "mappoly.map")) {
     stop(deparse(substitute(input.map)), " is not an object of class 'mappoly.map'")

@@ -45,7 +45,7 @@ get_w_m <- function(m){
 #' @param void interfunction to be documented
 #' @keywords internal
 #' @export
-get_memory<-function(){
+get_memory <- function(){
   z<-strsplit(system("free --mega", intern = T)[2], " ")
   mem<-as.numeric(z[[1]][z[[1]]!=""][3])
   t.all<-Sys.time()
@@ -75,7 +75,7 @@ get_memory<-function(){
 #'
 #'@export
 #'
-rev_map<-function(input.map)
+rev_map <- function(input.map)
 {
   output.map<-input.map
   output.map$info$mrk.names <- rev(input.map$info$mrk.names)
@@ -289,7 +289,7 @@ plot_compare_haplotypes <- function(m, hom.allele.p1, hom.allele.q1, hom.allele.
 #' @param mrks marker sequence index (integer vector)
 #' 
 #' @export
-print_mrk<-function(input.data, mrks)
+print_mrk <- function(input.data, mrks)
 {
   for(i in 1:length(mrks))
   {
@@ -320,7 +320,7 @@ print_mrk<-function(input.data, mrks)
 #' @param void interfunction to be documented
 #' @keywords internal
 #' @export
-pos_twopt_est<-function(input.seq)
+pos_twopt_est <- function(input.seq)
 {
   dp<-abs(abs(input.seq$seq.dose.p-(input.seq$m/2))-(input.seq$m/2))
   dq<-abs(abs(input.seq$seq.dose.q-(input.seq$m/2))-(input.seq$m/2))
@@ -424,7 +424,7 @@ gg_color_hue <- function(n) {
 #' @author Marcelo Mollinari, \email{mmollin@ncsu.edu}
 #'     
 #' @export
-update_missing<-function(input.data, 
+update_missing <- function(input.data, 
                          prob.thres = 0.95)
 {
   geno.dose <- dist_prob_to_class(geno = input.data$geno, 
@@ -440,7 +440,7 @@ update_missing<-function(input.data,
 #' @param void interfunction to be documented
 #' @keywords internal
 #' @export
-mrk_chisq_test<-function(x, m){
+mrk_chisq_test <- function(x, m){
   y<-x[-c(1:(m+1))]
   y[y==m+1]<-NA
   y<-table(y, useNA = "always")
@@ -464,7 +464,7 @@ mrk_chisq_test<-function(x, m){
 #' 
 #' @keywords genomic
 #' @export
-get_genomic_order<-function(input.seq){
+get_genomic_order <- function(input.seq){
   if (!class(input.seq) == "mappoly.sequence")
     stop(deparse(substitute(input.seq)), " is not an object of class 'mappoly.sequence'")
   if(all(is.na(input.seq$sequence.pos))){
@@ -514,7 +514,7 @@ get_genomic_order<-function(input.seq){
 #'}
 #' 
 #' @export
-drop_marker<-function(input.map, mrk)
+drop_marker <- function(input.map, mrk)
 {
   ## Checking class of arguments
   if (!inherits(input.map, "mappoly.map")) {
@@ -984,7 +984,7 @@ add_marker <- function(input.map,
 #'     
 #' @keywords internal
 #' @export check_data_sanity
-check_data_sanity<-function(x){
+check_data_sanity <- function(x){
   if(ncol(x$geno) == x$n.ind)
     check_data_dose_sanity(x)
   else if(ncol(x$geno) == x$m + 3)
@@ -997,7 +997,7 @@ check_data_sanity<-function(x){
 #'
 #' @param void interfunction to be documented
 #' @keywords internal
-elim_redundant_in_datasets<-function(dat, is.vcf = FALSE)
+elim_redundant_in_datasets <- function(dat, is.vcf = FALSE)
 {
   dat.temp <- unique(dat$geno.dose, dimnames = TRUE)
   if(nrow(dat.temp) == nrow(dat$geno.dose))
@@ -1207,7 +1207,7 @@ check_data_dist_sanity <- function(x){
 #'
 #' @export merge_datasets
 #' 
-merge_datasets = function(dat.1 = NULL, dat.2 = NULL){
+merge_datasets <- function(dat.1 = NULL, dat.2 = NULL){
   ## Check objects class
   if (is.null(dat.1)){
     if (is.null(dat.2)) return(dat.1)
@@ -1331,7 +1331,7 @@ merge_datasets = function(dat.1 = NULL, dat.2 = NULL){
 #'
 #' @export summary_maps
 #' 
-summary_maps = function(map.object){
+summary_maps <- function(map.object){
   ## Check data
   if (!all(unlist(lapply(map.object, function(x) class(x))) == 'mappoly.map')) stop('The indicated map object is not of class "mappoly.map".')
   
@@ -1367,7 +1367,7 @@ summary_maps = function(map.object){
 #' 
 #' @export update_map
 #' 
-update_map = function(map){
+update_map <- function(map){
   ## Checking object
   if (class(map) != 'mappoly.map') stop('The informed object is not of class mappoly.map. Please check it and try again.')
   

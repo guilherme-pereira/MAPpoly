@@ -140,7 +140,7 @@
 #'
 #' @export calc_genoprob_error
 #'
-calc_genoprob_error<-function(input.map,  step = 0, phase.config = "best", error = 0.01, 
+calc_genoprob_error <- function(input.map,  step = 0, phase.config = "best", error = 0.01, 
                               th.prob = 0.95, restricted = TRUE, verbose = TRUE)
 {
   if (!inherits(input.map, "mappoly.map")) {

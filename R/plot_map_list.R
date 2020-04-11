@@ -54,7 +54,7 @@
 #'
 #' @export plot_map_list
 #'
-plot_map_list<-function(map.list, horiz = TRUE, col = "lightgray", title = "Linkage Groups"){
+plot_map_list <- function(map.list, horiz = TRUE, col = "lightgray", title = "Linkage Groups"){
   if(class(map.list) == "mappoly.map")  
     map.list<-list(map.list)
   if(any(sapply(map.list, class)!="mappoly.map"))
@@ -107,7 +107,7 @@ plot_map_list<-function(map.list, horiz = TRUE, col = "lightgray", title = "Link
 #' @param void interfunction to be documented
 #' @keywords internal
 #' @export
-extract_map<-function(input.map, phase.config = "best")
+extract_map <- function(input.map, phase.config = "best")
 {
   if (!inherits(input.map, "mappoly.map")) {
     stop(deparse(substitute(input.map)), " is not an object of class 'mappoly.map'")
@@ -129,7 +129,7 @@ extract_map<-function(input.map, phase.config = "best")
 #' @keywords internal
 #' @export
 #' @importFrom berryFunctions roundedRect
-plot_one_map<-function(x, i = 0, horiz = FALSE, col = "lightgray")
+plot_one_map <- function(x, i = 0, horiz = FALSE, col = "lightgray")
 {
   if(horiz)
   {

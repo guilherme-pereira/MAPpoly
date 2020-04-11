@@ -403,7 +403,7 @@ est_rf_hmm <- function(input.seq, input.ph = NULL,
 #' @importFrom utils head
 #' @importFrom cli rule
 #' @export est_rf_hmm_sequential
-est_rf_hmm_sequential<-function(input.seq,
+est_rf_hmm_sequential <- function(input.seq,
                                 twopt,
                                 start.set = 4,
                                 thres.twopt = 5,
@@ -638,9 +638,6 @@ print.mappoly.map <- function(x, detailed = FALSE, ...) {
       }
       M <- cbind(get(x$info$data.name)$mrk.names[x$maps[[j]]$seq.num], M)
       big.name<-max(nchar(M[,1]))
-      format_name<-function(y, big.name){
-        paste0(y, paste0(rep(" ", big.name-nchar(y)), collapse = ""))
-      }
       M<-rbind(c("", letters[1:(ncol(M)-3)], "", ""), M)
       format(apply(M, 1, function(y) cat(c("\t", format_name(y[1], big.name), "\t", y[2:(x$info$m + 1)], rep(" ", 4), y[(x$info$m + 2):(x$info$m * 2 + 3)], "\n"), collapse = "")))
     }
@@ -800,7 +797,7 @@ plot.mappoly.map <- function(x, left.lim = 0, right.lim = Inf,
 #' prepare maps for plot 
 #' @param void interfunction to be documented
 #' @keywords internal
-prepare_map<-function(input.map, config = "best"){
+prepare_map <- function(input.map, config = "best"){
   if (!inherits(input.map, "mappoly.map")) {
     stop(deparse(substitute(input.map)), " is not an object of class 'mappoly.map'")
   }
@@ -907,7 +904,7 @@ update_ph_list_at_hmm_thres <- function(map, thres.hmm){
 #' @param void interfunction to be documented
 #' @keywords internal
 #' @export get_ph_list_subset
-get_ph_list_subset<-function(ph.list, seq.num, conf){
+get_ph_list_subset <- function(ph.list, seq.num, conf){
   config.to.test <- list(lapply(ph.list$config.to.test[[conf]], function(x, seq.num) x[as.character(seq.num)], seq.num))
   rf.vec <- ph.list$rec.frac[conf, , drop = FALSE]
   names(config.to.test) <- rownames(rf.vec)
@@ -922,7 +919,7 @@ get_ph_list_subset<-function(ph.list, seq.num, conf){
 #' @param void interfunction to be documented
 #' @keywords internal
 #' @export concatenate_ph_list
-concatenate_ph_list<-function(ph.list.1, ph.list.2){
+concatenate_ph_list <- function(ph.list.1, ph.list.2){
   if(length(ph.list.1)==0)
     return(ph.list.2)
   config.to.test <- c(ph.list.1$config.to.test, ph.list.2$config.to.test)
@@ -952,3 +949,10 @@ add_mrk_at_tail_ph_list <- function(ph.list.1, ph.list.2, cor.index){
             class = "two.pts.linkage.phases")
 }
 
+#' format marker names to print
+#' @param void interfunction to be documented
+#' @keywords internal
+#' @export format_name
+format_name <- function(y, big.name){
+  paste0(y, paste0(rep(" ", big.name-nchar(y)), collapse = ""))
+}

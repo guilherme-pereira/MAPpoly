@@ -59,7 +59,7 @@
 #'     \url{https://doi.org/10.1534/g3.119.400378}
 #'
 #' @export
-poly_cross_simulate<-function(m, rf.vec, n.mrk,
+poly_cross_simulate <- function(m, rf.vec, n.mrk,
                               n.ind, hom.allele,
                               draw=FALSE,
                               file="output.pdf",

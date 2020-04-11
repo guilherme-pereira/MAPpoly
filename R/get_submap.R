@@ -87,7 +87,7 @@
 #'
 #' @export get_submap
 #'
-get_submap<-function(input.map, mrk.pos,  phase.config = "best", reestimate.rf = TRUE,
+get_submap <- function(input.map, mrk.pos,  phase.config = "best", reestimate.rf = TRUE,
                      reestimate.phase = FALSE, thres.twopt = 5, thres.hmm = 3,
                      extend.tail = 50, count.cache = NULL, tol = 0.1, tol.final = 10e-4,
                      use.high.precision = FALSE, verbose=TRUE)

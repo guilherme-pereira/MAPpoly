@@ -115,7 +115,7 @@
 #'
 #' @export rf_snp_filter
 #'
-rf_snp_filter<-function(input.twopt,
+rf_snp_filter <- function(input.twopt,
                         thresh.LOD.ph = 5,
                         thresh.LOD.rf = 5,
                         thresh.rf = 0.15,
